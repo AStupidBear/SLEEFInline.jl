@@ -34,7 +34,7 @@ end
     return dadd(c1, x.hi * (@horner x.hi c2 c3 c4))
 end
 
-function sin(d::T) where {T<:Float64}
+@inline function sin(d::T) where {T<:Float64}
     qh = trunc(d * (T(M_1_PI) / (1 << 24)))
     ql = round(d * T(M_1_PI) - qh * (1 << 24))
 
@@ -61,7 +61,7 @@ function sin(d::T) where {T<:Float64}
     return u
 end
 
-function sin(d::T) where {T<:Float32}
+@inline function sin(d::T) where {T<:Float32}
     q = round(d * T(M_1_PI))
 
     s = dadd2(d, q * -PI_A(T))
@@ -84,7 +84,7 @@ function sin(d::T) where {T<:Float32}
     return u
 end
 
-function cos(d::T) where {T<:Float64}
+@inline function cos(d::T) where {T<:Float64}
     d = abs(d)
 
     qh = trunc(d * (T(M_1_PI) / (1 << 23)) - T(0.5) * (T(M_1_PI) / (1 << 23)))
@@ -114,7 +114,7 @@ function cos(d::T) where {T<:Float64}
     return u
 end
 
-function cos(d::T) where {T<:Float32}
+@inline function cos(d::T) where {T<:Float32}
     d = abs(d)
 
     q = 1 + 2*round(d * T(M_1_PI) - T(0.5))
@@ -182,7 +182,7 @@ end
     return @horner x c1 c2 c3 c4
 end
 
-function sin_fast(d::T) where {T<:Float64}
+@inline function sin_fast(d::T) where {T<:Float64}
     t = d
 
     qh = trunc(d * (T(M_1_PI) / (1 << 24)))
@@ -209,7 +209,7 @@ function sin_fast(d::T) where {T<:Float64}
     return u
 end
 
-function sin_fast(d::T) where {T<:Float32}
+@inline function sin_fast(d::T) where {T<:Float32}
     t = d
 
     q = round(d * T(M_1_PI))
@@ -233,7 +233,7 @@ function sin_fast(d::T) where {T<:Float32}
     return u
 end
 
-function cos_fast(d::T) where {T<:Float64}
+@inline function cos_fast(d::T) where {T<:Float64}
     t = d
 
     qh = trunc(d * (T(M_1_PI) / (1 << 23)) - T(0.5) * (T(M_1_PI) / (1 << 23)))
@@ -260,7 +260,7 @@ function cos_fast(d::T) where {T<:Float64}
     return u
 end
 
-function cos_fast(d::T) where {T<:Float32}
+@inline function cos_fast(d::T) where {T<:Float32}
     t = d
 
     q = 1 + 2*round(d * T(M_1_PI) - T(0.5))
@@ -339,7 +339,7 @@ end
     return @horner x b1 b2 b3 b4 b5
 end
 
-function sincos_fast(d::T) where {T<:Float64}
+@inline function sincos_fast(d::T) where {T<:Float64}
     s = d
 
     qh = trunc(d * ((2 * T(M_1_PI)) / (1 << 24)))
@@ -379,7 +379,7 @@ function sincos_fast(d::T) where {T<:Float64}
     return (rx, ry)
 end
 
-function sincos_fast(d::T) where {T<:Float32}
+@inline function sincos_fast(d::T) where {T<:Float32}
     s = d
 
     q = round(d * (2 * T(M_1_PI)))
@@ -415,7 +415,7 @@ function sincos_fast(d::T) where {T<:Float32}
     return (rx, ry)
 end
 
-function sincos(d::T) where {T<:Float64}
+@inline function sincos(d::T) where {T<:Float64}
     qh = trunc(d * ((2 * T(M_1_PI)) / (1 << 24)))
     ql = round(d * (2 * T(M_1_PI)) - qh * (1 << 24))
 
@@ -457,7 +457,7 @@ function sincos(d::T) where {T<:Float64}
 end
 
 
-function sincos(d::T) where {T<:Float32}
+@inline function sincos(d::T) where {T<:Float32}
     q = round(d * (2 * T(M_1_PI)))
 
     s = dadd2(d, q * (-PI_A(T) * T(0.5)))
@@ -540,7 +540,7 @@ end
     return @horner x c1 c2 c3 c4 c5 c6 c7
 end
 
-function tan_fast(d::T) where {T<:Float64}
+@inline function tan_fast(d::T) where {T<:Float64}
     qh = trunc(d * (2 * T(M_1_PI)) / (1 << 24))
     ql = round(d * (2 * T(M_1_PI)) - qh * (1 << 24))
 
@@ -568,7 +568,7 @@ function tan_fast(d::T) where {T<:Float64}
     return u
 end
 
-function tan_fast(d::T) where {T<:Float32}
+@inline function tan_fast(d::T) where {T<:Float32}
     q = round(d * (2 * T(M_1_PI)))
 
     x = d
@@ -625,7 +625,7 @@ end
     return dadd(c1,  x.hi * (@horner x.hi c2 c3 c4 c5 c6 c7))
 end
 
-function tan(d::T) where {T<:Float64}
+@inline function tan(d::T) where {T<:Float64}
     qh = trunc(d * (T(M_2_PI)) / (1 << 24))
     s = dadd2(dmul(Double(T(M_2_PI_H), T(M_2_PI_L)), d), (d < 0 ? T(-0.5) : T(0.5)) - qh * (1 << 24))
     ql = trunc(T(s))
@@ -658,7 +658,7 @@ function tan(d::T) where {T<:Float64}
     return v
 end
 
-function tan(d::T) where {T<:Float32}
+@inline function tan(d::T) where {T<:Float32}
     q = round(d * (T(M_2_PI)))
 
     s = dadd2(d, q * -PI_A(T) * T(0.5))
@@ -694,7 +694,7 @@ end
 
 Compute the inverse tangent of `x`, where the output is in radians.
 """
-function atan(x::T) where {T<:Union{Float32,Float64}}
+@inline function atan(x::T) where {T<:Union{Float32,Float64}}
     u = T(atan2k(Double(abs(x)), Double(T(1))))
     isinf(x) && (u = T(PI_2))
     flipsign(u, x)
@@ -741,7 +741,7 @@ end
 
 Compute the inverse tangent of `x`, where the output is in radians.
 """
-function atan_fast(x::T) where {T<:Union{Float32,Float64}}
+@inline function atan_fast(x::T) where {T<:Union{Float32,Float64}}
     q = 0
     if signbit(x)
         x = -x
@@ -768,7 +768,7 @@ const under_atan2(::Type{Float32}) = 2.9387372783541830947f-39
 
 Compute the inverse tangent of `x/y`, using the signs of both `x` and `y` to determine the quadrant of the return value.
 """
-function atan(x::T, y::T) where {T<:Union{Float32,Float64}}
+@inline function atan(x::T, y::T) where {T<:Union{Float32,Float64}}
     abs(y) < under_atan2(T) && (x *= T(Int64(1) << 53); y *= T(Int64(1) << 53))
     r = T(atan2k(Double(abs(x)), Double(y)))
 
@@ -791,7 +791,7 @@ end
 
 Compute the inverse tangent of `x/y`, using the signs of both `x` and `y` to determine the quadrant of the return value.
 """
-function atan_fast(x::T, y::T) where {T<:Union{Float32,Float64}}
+@inline function atan_fast(x::T, y::T) where {T<:Union{Float32,Float64}}
     r = atan2k_fast(abs(x), y)
     r = flipsign(r, y)
     if isinf(y) || y == 0
@@ -813,7 +813,7 @@ end
 
 Compute the inverse sine of `x`, where the output is in radians.
 """
-function asin(x::T) where {T<:Union{Float32,Float64}}
+@inline function asin(x::T) where {T<:Union{Float32,Float64}}
     d = atan2k(Double(abs(x)), dsqrt(dmul(dadd(T(1), x), dsub(T(1), x))))
     u = T(d)
     abs(x) == 1 && (u = T(PI_2))
@@ -826,7 +826,7 @@ end
 
 Compute the inverse sine of `x`, where the output is in radians.
 """
-function asin_fast(x::T) where {T<:Union{Float32,Float64}}
+@inline function asin_fast(x::T) where {T<:Union{Float32,Float64}}
     flipsign(atan2k_fast(abs(x), _sqrt((1 + x) * (1 - x))), x)
 end
 
@@ -837,7 +837,7 @@ end
 
 Compute the inverse cosine of `x`, where the output is in radians.
 """
-function acos(x::T) where {T<:Union{Float32,Float64}}
+@inline function acos(x::T) where {T<:Union{Float32,Float64}}
     d = atan2k(dsqrt(dmul(dadd(T(1), x), dsub(T(1), x))), Double(abs(x)))
     d = flipsign(d, x)
     abs(x) == 1 && (d = Double(T(0)))
@@ -851,6 +851,6 @@ end
 
 Compute the inverse cosine of `x`, where the output is in radians.
 """
-function acos_fast(x::T) where {T<:Union{Float32,Float64}}
+@inline function acos_fast(x::T) where {T<:Union{Float32,Float64}}
     flipsign(atan2k_fast(_sqrt((1 + x) * (1 - x)), abs(x)), x) + (signbit(x) ? T(M_PI) : T(0))
 end

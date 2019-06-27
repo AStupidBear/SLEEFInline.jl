@@ -34,7 +34,7 @@ end
 
 Returns the base `10` logarithm of `x`.
 """
-function log10(a::T) where {T<:Union{Float32,Float64}}
+@inline function log10(a::T) where {T<:Union{Float32,Float64}}
     x = T(dmul(logk(a), MDLN10E(T)))
 
     isinf(a) && (x = T(Inf))
@@ -51,7 +51,7 @@ end
 
 Returns the base `2` logarithm of `x`.
 """
-function log2(a::T) where {T<:Union{Float32,Float64}}
+@inline function log2(a::T) where {T<:Union{Float32,Float64}}
     u = T(dmul(logk(a), MDLN2E(T)))
 
     isinf(a) && (u = T(Inf))
@@ -108,7 +108,7 @@ end
 Compute the natural logarithm of `x`. The inverse of the natural logarithm is
 the natural expoenential function `exp(x)`
 """
-function log(d::T) where {T<:Union{Float32,Float64}}
+@inline function log(d::T) where {T<:Union{Float32,Float64}}
     o = d < floatmin(T)
     o && (d *= T(Int64(1) << 32) * T(Int64(1) << 32))
 
@@ -178,7 +178,7 @@ end
 Compute the natural logarithm of `x`. The inverse of the natural logarithm is
 the natural expoenential function `exp(x)`
 """
-function log_fast(d::T) where {T<:Union{Float32,Float64}}
+@inline function log_fast(d::T) where {T<:Union{Float32,Float64}}
     o = d < floatmin(T)
     o && (d *= T(Int64(1) << 32) * T(Int64(1) << 32))
 
