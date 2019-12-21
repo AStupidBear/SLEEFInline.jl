@@ -1,6 +1,5 @@
-name = "SLEEF"
-author = "Mustafa Mohamad <mus-m@outlook.com>"
-uuid = "3e6341c9-01f6-5312-b33f-f8894a2e817a"
+name = "SLEEFInline"
+uuid = "57f7a880-23e6-11ea-02cb-89910ec42bdd"
 version = "0.5.2"
 
 [extras]
