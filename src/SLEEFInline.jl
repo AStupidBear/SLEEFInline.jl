@@ -1,4 +1,4 @@
-module SLEEF
+module SLEEFInline
 
 # export sin, cos, tan, asin, acos, atan, sincos, sinh, cosh, tanh,
 #     asinh, acosh, atanh, log, log2, log10, log1p, ilogb, exp, exp2, exp10, expm1, ldexp, cbrt, pow
@@ -7,6 +7,10 @@ module SLEEF
 # export sin_fast, cos_fast, tan_fast, sincos_fast, asin_fast, acos_fast, atan_fast, atan2_fast, log_fast, cbrt_fast
 
 using Base.Math: uinttype, @horner, exponent_bias, exponent_mask, significand_bits, IEEEFloat, exponent_raw_max
+
+const SLEEF = SLEEFInline
+
+export SLEEF
 
 ## constants
 

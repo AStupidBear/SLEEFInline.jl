@@ -1,4 +1,4 @@
-using SLEEF
+using SLEEFInline
 using Test
 using Printf
 
